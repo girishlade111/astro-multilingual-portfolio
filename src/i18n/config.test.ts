@@ -26,12 +26,12 @@ import {
   toggleAllAccordionItems,
 } from '../utils/accordion';
 
-test('astro.config.mjs has built-in i18n configured for all 9 languages with directory prefix routing', () => {
+test('astro.config.mjs has built-in i18n configured for all 10 languages with directory prefix routing', () => {
   assert.ok(astroConfig.i18n, 'astro.config.mjs must define i18n configuration');
   assert.equal(astroConfig.i18n.defaultLocale, 'en');
   assert.deepEqual(
     astroConfig.i18n.locales,
-    ['en', 'jp', 'ko', 'zh', 'ru', 'pt', 'tr', 'fr', 'es']
+    ['en', 'mr', 'jp', 'ko', 'zh', 'ru', 'pt', 'tr', 'fr', 'es']
   );
   assert.equal(typeof astroConfig.i18n.routing, 'object');
   if (typeof astroConfig.i18n.routing === 'object') {
@@ -39,12 +39,12 @@ test('astro.config.mjs has built-in i18n configured for all 9 languages with dir
   }
 });
 
-test('supports the exact 9 requested languages', () => {
+test('supports the exact 10 requested languages', () => {
   assert.deepEqual(
     [...LOCALES],
-    ['en', 'jp', 'ko', 'zh', 'ru', 'pt', 'tr', 'fr', 'es']
+    ['en', 'mr', 'jp', 'ko', 'zh', 'ru', 'pt', 'tr', 'fr', 'es']
   );
-  assert.equal(LOCALES.length, 9);
+  assert.equal(LOCALES.length, 10);
   assert.equal(DEFAULT_LOCALE, 'en');
 });
 
@@ -71,9 +71,9 @@ test('extracts subpath and switches locale URLs cleanly across pages', () => {
   assert.equal(switchLocalePath('/fr/blog/template-post/', 'ko'), '/ko/blog/template-post');
 });
 
-test('generates complete SEO hreflang alternate links for all 9 languages', () => {
+test('generates complete SEO hreflang alternate links for all 10 languages', () => {
   const alternates = getAlternateLinks('/en/blog/template-post', 'https://portfolio.example.com');
-  assert.equal(alternates.length, 9);
+  assert.equal(alternates.length, 10);
   const jpLink = alternates.find((a) => a.locale === 'jp');
   assert.ok(jpLink);
   assert.equal(jpLink.href, 'https://portfolio.example.com/jp/blog/template-post');

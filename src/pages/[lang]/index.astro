@@ -25,43 +25,42 @@ const profileImageUrl = '/assets/profile.jpeg';
 
 <BaseLayout
   locale={locale}
-  title="Girish Lade — UI/UX Designer, Full-Stack Developer & LadeStack Founder"
+  title="Girish Lade: UI/UX Designer, Full-Stack Developer and LadeStack Founder"
   description="Explore the portfolio of Girish Balaso Lade, a UI/UX designer and full-stack developer creating privacy-conscious developer tools, web apps, and LadeStack products."
   currentPath={currentPath}
 >
   <div id="homepage-wrapper" class="relative w-full">
-    <!-- Reserved Clean Hero Section Exclusively for the 3D Lanyard Component -->
+    {/* Clean Hero Stage for 3D Lanyard */}
     <section
       id="lanyard-hero-slot"
       aria-label="Interactive 3D Lanyard Hero"
       class="relative z-30 w-full h-[380px] sm:h-[440px] lg:h-[480px] flex flex-col items-center justify-end select-none overflow-visible"
     >
-      <!-- Responsive Botanical Hero Background (Mobile & Desktop optimized) -->
-      <HeroBackground />
+      {/* Studio Exhibition Stage Background */}
+      <HeroBackground imageUrl="/assets/aistudio/image_a475d35f.webp" />
 
-      <!-- Instant 0ms SSR Lanyard Preview (renders immediately with HTML and pre-decodes the profile image for WebGL Frame 1) -->
+      {/* 0ms SSR Lanyard Preview */}
       <div
         id="lanyard-ssr-preview"
         aria-hidden="true"
         class="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-start overflow-hidden transition-opacity duration-150"
       >
-        <!-- Woven Lanyard Strap (SSR Preview) -->
+        {/* Woven Lanyard Strap */}
         <div
           id="lanyard-ssr-strap"
           class="w-[21px] sm:w-[24px] lg:w-[26px] h-[54px] sm:h-[64px] lg:h-[70px] shadow-xs"
-
         />
-        <!-- Metallic Silver Clamp -->
+        {/* Metallic Silver Clamp */}
         <div class="w-[25px] sm:w-[29px] lg:w-[31px] h-[12px] sm:h-[14px] rounded-[3px] bg-gradient-to-b from-[#e4e7ec] via-[#cfd4dc] to-[#9ea4b0] border border-zinc-500/40 shadow-2xs -mt-[1px]" />
-        <!-- Metallic Ring -->
+        {/* Metallic Ring */}
         <div class="w-[14px] sm:w-[16px] h-[14px] sm:h-[16px] rounded-full border-[2.5px] border-[#c8cdd6] shadow-2xs -mt-[3px] z-10" />
-        <!-- Portrait ID Card with Pre-Decoded Profile Image -->
-        <div class="relative -mt-[7px] w-[140px] h-[197px] sm:w-[162px] sm:h-[228px] lg:w-[178px] lg:h-[250px] rounded-[14px] sm:rounded-[16px] bg-white dark:bg-[#141416] shadow-[0_10px_28px_rgba(0,0,0,0.16)] ring-1 ring-black/10 dark:ring-white/10 dark:shadow-[0_14px_36px_rgba(0,0,0,0.5)] overflow-hidden">
+        {/* Portrait ID Card with Pre-Decoded Profile Image */}
+        <div class="relative -mt-[7px] w-[140px] h-[197px] sm:w-[162px] sm:h-[228px] lg:w-[178px] lg:h-[250px] rounded-[14px] sm:rounded-[16px] bg-white dark:bg-[#141416] shadow-[0_10px_28px_rgba(0,0,0,0.12)] ring-1 ring-black/10 dark:ring-white/10 dark:shadow-[0_14px_36px_rgba(0,0,0,0.45)] overflow-hidden">
           <img
             id="lanyard-preload-profile"
             data-lanyard-src={profileImageUrl}
             src={profileImageUrl}
-            alt="Girish Lade — UI/UX Designer & Full-Stack Developer"
+            alt="Girish Lade: UI/UX Designer and Full-Stack Developer"
             width="400"
             height="600"
             fetchpriority="high"
@@ -69,12 +68,12 @@ const profileImageUrl = '/assets/profile.jpeg';
             decoding="async"
             class="w-full h-full object-cover select-none"
           />
-          <!-- Card Top Slot Punch Hole -->
-          <div class="absolute top-[7px] sm:top-[8px] left-1/2 -translate-x-1/2 w-[30px] sm:w-[34px] h-[6px] sm:h-[7px] rounded-full bg-[#f4f5f6] dark:bg-[#0c0c0e] shadow-inner ring-1 ring-black/15 dark:ring-white/10" />
+          {/* Card Top Slot Punch Hole */}
+          <div class="absolute top-[7px] sm:top-[8px] left-1/2 -translate-x-1/2 w-[30px] sm:w-[34px] h-[6px] sm:h-[7px] rounded-full bg-zinc-100 dark:bg-zinc-900 shadow-inner ring-1 ring-black/10 dark:ring-white/10" />
         </div>
       </div>
 
-      <!-- 3D Lanyard Canvas Stage anchored in Hero and extending over sections below when stretched -->
+      {/* 3D Lanyard Canvas Stage */}
       <div
         id="lanyard-canvas-stage"
         class="pointer-events-none absolute top-0 left-0 right-0 h-[780px] sm:h-[880px] lg:h-[940px] z-30 overflow-visible"
@@ -107,31 +106,25 @@ const profileImageUrl = '/assets/profile.jpeg';
         />
       </div>
 
-      <!-- Name plate: sits directly under the hanging card -->
+      {/* Name plate: crisp, minimal, authoritative typography */}
       <div class="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[46px] sm:bottom-[48px] lg:bottom-[52px] z-20">
-        <p
+        <h1
           id="hero-name"
-          class="hero-name text-[28px] sm:text-[32px] lg:text-[36px] font-semibold leading-none text-zinc-950 dark:text-zinc-100 whitespace-nowrap select-none"
+          class="hero-name text-[26px] sm:text-[30px] lg:text-[34px] font-bold leading-none text-zinc-950 dark:text-zinc-50 whitespace-nowrap select-none tracking-tight"
         >
           Girish Lade
-        </p>
+        </h1>
       </div>
     </section>
 
-    <!-- Portfolio Master Content (Hydrates on idle so 3D Lanyard gets 100% initial load priority) -->
+    {/* Portfolio Master Content */}
     <PortfolioSections client:visible={{ rootMargin: '200px' }} locale={locale} />
   </div>
 </BaseLayout>
 
 <style>
-  /* Name plate luxury editorial typography: static and stable */
   .hero-name {
-    font-family: 'Cormorant Garamond', 'Playfair Display', Didot, 'Bodoni MT', Georgia, serif;
-    letter-spacing: -0.01em;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9), 0 2px 12px rgba(0, 0, 0, 0.04);
-  }
-
-  :global(.dark) .hero-name {
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 2px 16px rgba(255, 255, 255, 0.12);
+    font-family: var(--font-display);
+    letter-spacing: -0.035em;
   }
 </style>

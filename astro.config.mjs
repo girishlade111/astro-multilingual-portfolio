@@ -15,6 +15,7 @@ export default defineConfig({
         ? `https://${process.env.VERCEL_URL}`
         : 'https://girish.ladestack.in'),
   integrations: [react()],
+  base: process.env.ASTRO_BASE || '/',
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'mr', 'jp', 'ko', 'zh', 'ru', 'pt', 'tr', 'fr', 'es'],

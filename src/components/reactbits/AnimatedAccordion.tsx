@@ -21,6 +21,7 @@ export interface AnimatedAccordionItemProps {
 
 export const AnimatedAccordionItem: React.FC<AnimatedAccordionItemProps> = ({
   id,
+  indexLabel,
   title,
   subtitle,
   metaLabel,
@@ -55,26 +56,53 @@ export const AnimatedAccordionItem: React.FC<AnimatedAccordionItemProps> = ({
             aria-expanded={isOpen}
             aria-controls={`${testIdPrefix}-panel-${id}`}
             data-testid={`${testIdPrefix}-trigger-${id}`}
-            className="accordion-trigger"
+            className="accordion-trigger group"
           >
             <span className="accordion-label">
-              {isPrimary && icon && (
-                <span className="accordion-section-icon" aria-hidden="true">{icon}</span>
+              {isPrimary && (
+                <span className="inline-flex items-center gap-2.5">
+                  {indexLabel && (
+                    <span className="font-mono text-[11px] font-semibold text-zinc-400 dark:text-zinc-500">
+                      {indexLabel}
+                    </span>
+                  )}
+                  {icon && (
+                    <span className="accordion-section-icon" aria-hidden="true">{icon}</span>
+                  )}
+                </span>
               )}
-              <span>{title}</span>
+              <span className="font-semibold text-zinc-900 group-hover:text-zinc-700 dark:text-zinc-100 dark:group-hover:text-zinc-300 transition-colors">
+                {title}
+              </span>
             </span>
-            <span
-              className="accordion-indicator"
-              aria-hidden="true"
-              title={isOpen ? collapseHint : expandHint}
-            >
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2">
-                <path d="M3 8h10" />
-                <path className="accordion-indicator-vertical" d="M8 3v10" />
-              </svg>
+
+            <span className="inline-flex items-center gap-2.5 shrink-0">
+              {metaLabel && (
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 border border-zinc-200/50 dark:border-zinc-700/50">
+                  {metaLabel}
+                </span>
+              )}
+              <span
+                className="accordion-indicator inline-flex items-center justify-center w-6 h-6 rounded-md text-zinc-400 group-hover:text-zinc-700 group-hover:bg-zinc-100 dark:group-hover:text-zinc-200 dark:group-hover:bg-zinc-800 transition-all"
+                aria-hidden="true"
+                title={isOpen ? collapseHint : expandHint}
+              >
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-45 text-zinc-900 dark:text-zinc-100' : ''}`}
+                >
+                  <path d="M8 3v10M3 8h10" />
+                </svg>
+              </span>
             </span>
           </button>
         </Heading>
+
         <div
           hidden={!isOpen}
           id={`${testIdPrefix}-panel-${id}`}
@@ -83,11 +111,10 @@ export const AnimatedAccordionItem: React.FC<AnimatedAccordionItemProps> = ({
           data-testid={`${testIdPrefix}-panel-${id}`}
           className="accordion-panel"
         >
-          <div className="accordion-body space-y-4">
-            {(subtitle || metaLabel) && (
-              <div className="accordion-overview">
-                {subtitle && <p>{subtitle}</p>}
-                {metaLabel && <span>{metaLabel}</span>}
+          <div className="accordion-body space-y-4 pt-1">
+            {subtitle && (
+              <div className="accordion-overview pb-2">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{subtitle}</p>
               </div>
             )}
             {children}
@@ -110,10 +137,6 @@ export interface AnimatedAccordionGroupProps {
   }) => React.ReactNode;
 }
 
-/**
- * React Bits-patterned Accordion group wrapper providing WAI-ARIA keyboard navigation
- * across accordion headers (`ArrowDown`, `ArrowUp`, `Home`, `End`).
- */
 export const AnimatedAccordionGroup: React.FC<AnimatedAccordionGroupProps> = ({
   ariaLabel,
   itemIds,

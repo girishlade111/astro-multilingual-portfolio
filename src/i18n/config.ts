@@ -714,7 +714,13 @@ export function getTranslations(locale: Locale): UIStrings {
  *      "/en" -> "/"
  */
 export function extractSubPath(pathname: string): string {
-  const normalized = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  let normalized = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) {
+    const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+    if (base && normalized.startsWith(base)) {
+      normalized = normalized.slice(base.length) || '/';
+    }
+  }
   const segments = normalized.split('/').filter(Boolean);
   if (segments.length === 0) {
     return '/';
@@ -733,11 +739,14 @@ export function extractSubPath(pathname: string): string {
  */
 export function switchLocalePath(currentPathname: string, targetLocale: Locale): string {
   const subPath = extractSubPath(currentPathname);
+  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL)
+    ? import.meta.env.BASE_URL.replace(/\/+$/, '')
+    : '';
   if (subPath === '/') {
-    return `/${targetLocale}/`;
+    return `${base}/${targetLocale}/`;
   }
   const cleanSubPath = subPath.replace(/\/+$/, '');
-  return `/${targetLocale}${cleanSubPath}`;
+  return `${base}/${targetLocale}${cleanSubPath}`;
 }
 
 export interface AlternateLink {
