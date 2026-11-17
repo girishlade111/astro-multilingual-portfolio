@@ -21,8 +21,6 @@ const locale: Locale = resolveLocale(activeLocale);
 const currentPath = getRelativeLocaleUrl(locale, '');
 
 const profileImageUrl = '/assets/profile.jpeg';
-const heroBackgroundImageUrl = '/assets/aistudio/image_light_botanical_clean.webp';
-const heroDarkBackgroundImageUrl = '/assets/aistudio/image_dark_botanical_clean.webp';
 ---
 
 <BaseLayout
@@ -39,7 +37,7 @@ const heroDarkBackgroundImageUrl = '/assets/aistudio/image_dark_botanical_clean.
       class="relative z-30 w-full h-[380px] sm:h-[440px] lg:h-[480px] flex flex-col items-center justify-end select-none overflow-visible"
     >
       <!-- Responsive Botanical Hero Background (Mobile & Desktop optimized) -->
-      <HeroBackground imageUrl={heroBackgroundImageUrl} darkImageUrl={heroDarkBackgroundImageUrl} />
+      <HeroBackground />
 
       <!-- Instant 0ms SSR Lanyard Preview (renders immediately with HTML and pre-decodes the profile image for WebGL Frame 1) -->
       <div

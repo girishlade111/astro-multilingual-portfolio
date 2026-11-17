@@ -334,9 +334,6 @@ html.dark .portfolio-content .identity-card {
 .identity-actions > div { flex: 1 1 220px; }
 
 .portfolio-content :where(button, a.inline-flex) {
-  min-height: 40px;
-  height: auto;
-  padding-block: 8px;
   white-space: normal;
 }
 
@@ -450,13 +447,7 @@ html.dark .portfolio-content .text-zinc-400 { color: #a1a1aa; }
 .portfolio-content .accordion-body .flex > .space-y-0\.5 { flex: 1 1 150px; }
 .portfolio-content .accordion-body .grid > * { min-width: 0; }
 .portfolio-content .accordion-body .grid { column-gap: 24px; row-gap: 12px; }
-.portfolio-content .accordion-body .grid > div {
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  padding: 10px 0;
-  box-shadow: none;
-}
+/* Inner grid cards retain their crisp borders & backgrounds */
 .portfolio-content .accordion-body a { overflow-wrap: anywhere; }
 
 :where(a, button, select):focus-visible {

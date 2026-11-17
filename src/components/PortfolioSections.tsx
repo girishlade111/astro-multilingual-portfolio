@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Locale } from '../i18n/config';
 import { getPortfolioContent } from '../data/portfolioContent';
-import SpotlightCard from './reactbits/SpotlightCard';
+// Clean semantic section used for identity card
 import {
   AnimatedAccordionGroup,
   AnimatedAccordionItem,
@@ -183,8 +183,7 @@ export const PortfolioSections: React.FC<PortfolioSectionsProps> = ({
   return (
     <div className="portfolio-content relative z-10 w-full pt-2 pb-14 sm:pb-20">
       {/* Compact, Clean Identity Intro Below Lanyard Hero */}
-      <SpotlightCard
-        as="section"
+      <section
         className="identity-card rounded-xl border border-zinc-200/85 bg-white/95 dark:border-zinc-800/85 dark:bg-[#121214]/95 p-4 sm:p-5 mb-4 sm:mb-5 transition-colors duration-150"
       >
         <div className="space-y-3">
@@ -262,7 +261,7 @@ export const PortfolioSections: React.FC<PortfolioSectionsProps> = ({
             </button>
           </div>
         </div>
-      </SpotlightCard>
+      </section>
 
       {/* React Bits Animated Accordion Directory */}
       <AnimatedAccordionGroup

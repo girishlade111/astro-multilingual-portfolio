@@ -1,113 +1,178 @@
-# Astro Multilingual Portfolio & Blog
+# Astro Multilingual Portfolio & Markdown Blog
 
-A minimal, SEO-optimized multilingual portfolio and Markdown blog built entirely with **Astro JS**, supporting **9 languages** out of the box.
+[![Astro](https://img.shields.io/badge/Astro-v7.4-FF5D01?style=flat&logo=astro&logoColor=white)](https://astro.build/)
+[![React](https://img.shields.io/badge/React-v19-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.3-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-v7.0-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Three.js](https://img.shields.io/badge/Three.js-WebGL-black?style=flat&logo=three.js&logoColor=white)](https://threejs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Live site:** [ladestack.in](https://ladestack.in/) &nbsp;|&nbsp; **Author:** [Girish Lade](https://github.com/girishlade111) &nbsp;|&nbsp; **Brand:** [LadeStack](https://ladestack.in/)
+A high-performance, SEO-first multilingual portfolio and Markdown publishing engine built with **Astro 7**, **React 19**, **Tailwind CSS v4**, and **Three.js**. Supports **10 languages** natively with zero-flash dark/light theming, dynamic SVG Open Graph image generation, RSS 2.0 feeds, and interactive 3D WebGL physics.
 
----
-
-## Overview
-
-This project is a production-ready personal portfolio and blog starter that combines:
-
-- A **full portfolio** with 10 content sections (profile, story, education, vision, products, prototypes, capabilities, workflow, contact, and more)
-- A **Markdown-powered blog** with per-language content collections
-- Native Astro **i18n routing** across 9 locales with hreflang SEO metadata
-- React components for interactive UI (animated accordion, spotlight cards, Lanyard, Three.js hero background)
-- Tailwind CSS v4 via the Vite plugin, zero config
-- TypeScript throughout, strict mode
+**Live Website:** [ladestack.in](https://ladestack.in/) &nbsp;|&nbsp; **Author:** [Girish Lade](https://github.com/girishlade111) &nbsp;|&nbsp; **Ecosystem:** [LadeStack](https://ladestack.in/)
 
 ---
 
-## Supported Languages
+## Table of Contents
 
-| Code | Language   | Native Name |
-|------|------------|-------------|
-| `en` | English    | English     |
-| `jp` | Japanese   | 日本語       |
-| `ko` | Korean     | 한국어       |
-| `zh` | Chinese    | 中文         |
-| `ru` | Russian    | Русский      |
-| `pt` | Portuguese | Português   |
-| `tr` | Turkish    | Türkçe      |
-| `fr` | French     | Français    |
-| `es` | Spanish    | Español     |
+- [Features](#features)
+- [Supported Languages (10 Locales)](#supported-languages-10-locales)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Environment Variables](#environment-variables)
+  - [Development & Build Commands](#development--build-commands)
+- [Architecture & Deep Dive](#architecture--deep-dive)
+  - [1. Native i18n Routing Engine](#1-native-i18n-routing-engine)
+  - [2. Interactive 3D Lanyard & Studio Stage](#2-interactive-3d-lanyard--studio-stage)
+  - [3. Markdown Blog Engine](#3-markdown-blog-engine)
+  - [4. Portfolio Content Architecture](#4-portfolio-content-architecture)
+  - [5. Dynamic Open Graph Image Generator](#5-dynamic-open-graph-image-generator)
+  - [6. RSS Feeds](#6-rss-feeds)
+  - [7. SEO & JSON-LD Structured Data](#7-seo--json-ld-structured-data)
+- [Adding a New Language](#adding-a-new-language)
+- [Deployment Guide](#deployment-guide)
+  - [Vercel](#vercel)
+  - [Netlify](#netlify)
+  - [Cloudflare Pages](#cloudflare-pages)
+  - [GitHub Pages](#github-pages)
+- [Contributing](#contributing)
+- [License](#license)
+- [Author & Connect](#author--connect)
 
-All UI strings, blog content, and SEO metadata are fully translated for each locale. URLs follow the pattern `/{lang}/` (e.g. `/jp/`, `/fr/blog/my-post`).
+---
+
+## Features
+
+- **Native Astro i18n Architecture**: Prefix-based routing (`/{lang}/`) for all 10 locales with fallback resolution, automatic language redirection, and localized path generation.
+- **10 Fully Supported Locales**: Complete localized UI strings, navigation, portfolio sections, and blog articles in English, Marathi, Japanese, Korean, Chinese, Russian, Portuguese, Turkish, French, and Spanish.
+- **Interactive 3D WebGL Lanyard Hero**: Three.js physics-driven identification lanyard with realistic cloth simulation, custom shaders, gyroscope-based mobile tilt, and instant 0ms SSR image preview fallback.
+- **Precision Studio Stage**: Minimalist architectural background with SVG grid alignment ticks, eliminating heavy visual clutter while enhancing focus on the interactive hero.
+- **10-Section Comprehensive Portfolio**:
+  1. *About & Identity* (Bio, quick facts, metrics)
+  2. *Experience & Journey* (5-chapter career story)
+  3. *Education & Background* (Formal and self-directed disciplines)
+  4. *Vision & Values* (Guiding philosophy, 10 core principles)
+  5. *LadeStack Ecosystem* (Architecture, tool philosophy, privacy manifesto)
+  6. *Products & Live Web Apps* (9 production applications with tech breakdown)
+  7. *Prototypes & Research Labs* (9 experimental R&D initiatives)
+  8. *Skills & Capability Matrix* (10 technical domains and competency levels)
+  9. *Engineering Workflow* (8-step solo builder methodology)
+  10. *Contact & Network* (Direct links, communication channels)
+- **High-Performance Markdown Blog**:
+  - Full Content Collections schema with type safety.
+  - Auto-generated Table of Contents with active heading spy.
+  - Estimated reading time calculator.
+  - Cross-language article linking (switch between translations of the same article).
+  - Code syntax highlighting and one-click code copy.
+  - Native reading progress bar.
+- **Dynamic On-The-Fly OG Cards**: Generates localized, brand-compliant SVG Open Graph images for every article (`/api/og/[lang]/[slug].svg`) for rich social sharing.
+- **Per-Locale RSS 2.0 Feeds**: Dedicated RSS syndication feeds for every supported language (`/[lang]/rss.xml`).
+- **Zero-Flash Theme System**: Instant light and dark mode toggling with inline header scripts preventing FOUC (Flash of Unstyled Content).
+- **Enterprise SEO**: Auto-injected `<link rel="alternate" hreflang="...">` tags, canonical URL resolution, and Google-compliant schema graph (`Person`, `WebSite`, `BlogPosting` JSON-LD).
+- **Tailwind CSS v4**: Built on the modern `@tailwindcss/vite` engine for instantaneous hot-reloads and atomic CSS output.
+
+---
+
+## Supported Languages (10 Locales)
+
+| Code | Language | Native Name | Region / Locale | Writing Direction |
+|:---:|:---|:---|:---:|:---:|
+| `en` | English | English | `en_US` | LTR |
+| `mr` | Marathi | मराठी | `mr_IN` | LTR |
+| `jp` | Japanese | 日本語 | `ja_JP` | LTR |
+| `ko` | Korean | 한국어 | `ko_KR` | LTR |
+| `zh` | Chinese | 中文 | `zh_CN` | LTR |
+| `ru` | Russian | Русский | `ru_RU` | LTR |
+| `pt` | Portuguese | Português | `pt_BR` | LTR |
+| `tr` | Turkish | Türkçe | `tr_TR` | LTR |
+| `fr` | French | Français | `fr_FR` | LTR |
+| `es` | Spanish | Español | `es_ES` | LTR |
 
 ---
 
 ## Tech Stack
 
-| Layer        | Technology                                      |
-|--------------|-------------------------------------------------|
-| Framework    | [Astro](https://astro.build/) v7                |
-| UI Library   | [React](https://react.dev/) v19 via `@astrojs/react` |
-| Styling      | [Tailwind CSS](https://tailwindcss.com/) v4 (Vite plugin) |
-| Language     | TypeScript v7, strict                           |
-| 3D / Motion  | [Three.js](https://threejs.org/), [Motion](https://motion.dev/) |
-| Icons        | [Lucide React](https://lucide.dev/)             |
-| Build tool   | Vite v8 + esbuild v0.28                         |
-| AI API       | Google Gemini via `@google/genai`               |
-| Server       | Express (optional API layer)                    |
+| Domain | Technology | Description |
+|---|---|---|
+| **Core Framework** | [Astro v7.4](https://astro.build/) | Islands architecture, static-first rendering, native i18n routing |
+| **Component Layer** | [React v19](https://react.dev/) | Dynamic interactive UI components (`@astrojs/react`) |
+| **Styling** | [Tailwind CSS v4.3](https://tailwindcss.com/) | Atomic utility styles powered by `@tailwindcss/vite` |
+| **Type System** | [TypeScript v7.0](https://www.typescriptlang.org/) | Strict mode, end-to-end interface contracts |
+| **3D Graphics** | [Three.js v0.187](https://threejs.org/) | WebGL physics canvas, custom shaders, cloth simulation |
+| **Motion & Micro-interactions** | [Motion v12](https://motion.dev/) / Framer Motion | Fluid accordion animations and component transitions |
+| **Icons** | [Lucide React](https://lucide.dev/) | Lightweight, accessible, crisp SVG iconography |
+| **Build Pipeline** | [Vite v8](https://vitejs.dev/) + [esbuild](https://esbuild.github.io/) | Sub-second module bundler and compiler |
+| **AI Integration** | [Google GenAI SDK](https://github.com/google/generative-ai-js) | Multimodal Gemini API integration hooks |
 
 ---
 
 ## Project Structure
 
-```
-astro-multilingual-portfolio-&-blog/
-├── public/                        # Static assets (favicon, OG images, etc.)
+```text
+astro-multilingual-portfolio/
+├── public/                           # Static assets served at root
+│   ├── assets/                       # Profile avatars, badges, and illustrations
+│   ├── favicon.svg                   # Brand vector favicon
+│   └── robots.txt                    # Search crawler directives
 ├── src/
 │   ├── components/
-│   │   ├── Footer.astro           # Site footer with locale switcher
-│   │   ├── HeroBackground.astro   # Three.js animated hero canvas
-│   │   ├── Lanyard.jsx            # Interactive Lanyard / ID card component
-│   │   ├── Navbar.astro           # Responsive top navigation with language picker
-│   │   ├── PortfolioSections.tsx  # Main portfolio content renderer (10 sections)
-│   │   └── reactbits/
-│   │       ├── AnimatedAccordion.tsx
-│   │       ├── BlurText.tsx
-│   │       ├── DecryptedText.tsx
-│   │       ├── ShinyText.tsx
-│   │       └── SpotlightCard.tsx
+│   │   ├── Footer.astro              # Responsive footer with legal, brand, and social links
+│   │   ├── HeroBackground.astro      # Minimalist architectural studio stage grid
+│   │   ├── Lanyard.jsx               # Interactive Three.js WebGL physics ID card
+│   │   ├── Navbar.astro              # Sticky responsive header with language & theme pickers
+│   │   ├── PortfolioSections.tsx     # Accordion-driven portfolio directory (10 sections)
+│   │   ├── ReadingProgress.astro     # Scroll-synchronized reading bar for blog posts
+│   │   └── reactbits/                # Specialized interactive React micro-components
+│   │       ├── AnimatedAccordion.tsx # Smooth spring-physics accordion panels
+│   │       ├── BlurText.tsx          # Progressive blur-in heading animation
+│   │       ├── DecryptedText.tsx     # Matrix-style character scrambling effect
+│   │       ├── ShinyText.tsx         # Sweeping metallic gradient typography
+│   │       └── SpotlightCard.tsx     # Mouse-tracking radial spotlight card
 │   ├── content/
-│   │   └── blog/
-│   │       ├── en/template-post.md
-│   │       ├── jp/template-post.md
-│   │       ├── ko/template-post.md
-│   │       ├── zh/template-post.md
-│   │       ├── ru/template-post.md
-│   │       ├── pt/template-post.md
-│   │       ├── tr/template-post.md
-│   │       ├── fr/template-post.md
-│   │       └── es/template-post.md
+│   │   └── blog/                     # Localized Markdown articles organized by locale code
+│   │       ├── en/*.md               # English blog posts
+│   │       ├── mr/*.md               # Marathi blog posts (मराठी)
+│   │       ├── jp/*.md               # Japanese blog posts (日本語)
+│   │       ├── ko/*.md               # Korean blog posts (한국어)
+│   │       ├── zh/*.md               # Chinese blog posts (中文)
+│   │       ├── ru/*.md               # Russian blog posts (Русский)
+│   │       ├── pt/*.md               # Portuguese blog posts (Português)
+│   │       ├── tr/*.md               # Turkish blog posts (Türkçe)
+│   │       ├── fr/*.md               # French blog posts (Français)
+│   │       └── es/*.md               # Spanish blog posts (Español)
 │   ├── data/
-│   │   └── portfolioContent.ts    # All localized portfolio data (9 languages)
+│   │   └── portfolioContent.ts       # Central typed repository of 10-section copy across 10 languages
 │   ├── i18n/
-│   │   ├── config.ts              # Locale metadata, UI translations, routing helpers
-│   │   └── config.test.ts         # Unit tests for i18n utilities
+│   │   ├── config.ts                 # Supported locales, UI labels, route translators, hreflang mappings
+│   │   └── config.test.ts            # Unit tests ensuring 100% localization key parity
 │   ├── layouts/
-│   │   └── BaseLayout.astro       # HTML shell, SEO head, hreflang tags
+│   │   ├── BaseLayout.astro          # Root HTML layout, SEO meta tags, theme bootstrap, JSON-LD
+│   │   └── BlogPostLayout.astro      # Article layout with ToC, reading time, code copy, and author card
 │   ├── pages/
-│   │   ├── index.astro            # Root redirect to default locale
+│   │   ├── 404.astro                 # Localized custom 404 error page
+│   │   ├── index.astro               # Root index performing geo/preference-aware redirection
+│   │   ├── api/
+│   │   │   └── og/[lang]/[slug].ts   # Dynamic SVG Open Graph generator endpoint
 │   │   └── [lang]/
-│   │       ├── index.astro        # Localized home / portfolio page
+│   │       ├── index.astro           # Localized portfolio home page
+│   │       ├── rss.xml.ts            # Localized RSS 2.0 feed generator
 │   │       └── blog/
-│   │           ├── index.astro    # Blog listing page
-│   │           └── [slug].astro   # Individual blog post with ToC & cross-links
+│   │           ├── index.astro       # Localized blog listing directory
+│   │           └── [slug].astro      # Localized blog post detail page
 │   ├── styles/
-│   │   └── global.css             # Global Tailwind imports and base styles
+│   │   └── global.css                # Tailwind imports, custom typography, dark mode CSS variables
 │   └── utils/
-│       ├── accordion.ts           # Accordion state utilities
-│       ├── blog.ts                # Blog collection helpers
-│       └── gyro.ts                # Gyroscope / tilt effect utilities
-├── .env.example                   # Environment variable template
-├── .gitignore
-├── astro.config.mjs               # Astro config: i18n, React, Tailwind, Vite
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
+│       ├── blog.ts                   # Astro content collection querying and sorting utilities
+│       └── gyro.ts                   # Mobile device orientation and tilt event handlers
+├── .env.example                      # Template for environment configuration
+├── .gitignore                        # Git exclusion rules (node_modules, dist, .astro, .env)
+├── astro.config.mjs                  # Astro configuration (i18n, React, Tailwind, Vite)
+├── package.json                      # Dependencies and automation scripts
+├── tsconfig.json                     # Strict TypeScript compiler options
+└── vite.config.ts                    # Vite plugin pipeline
 ```
 
 ---
@@ -116,205 +181,241 @@ astro-multilingual-portfolio-&-blog/
 
 ### Prerequisites
 
-- **Node.js** >= 18
-- **npm** >= 9
+- **Node.js**: `v18.20.0` or higher (`v20+` recommended)
+- **npm**: `v9.0.0` or higher (or `pnpm` / `bun`)
+- **Git**
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/girishlade111/astro-multilingual-portfolio-blog.git
-cd astro-multilingual-portfolio-blog
+git clone https://github.com/girishlade111/astro-multilingual-portfolio.git
 
-# Install dependencies
+# Enter project directory
+cd astro-multilingual-portfolio
+
+# Install dependencies cleanly
 npm install
 ```
 
 ### Environment Variables
 
-Copy the example file and fill in your values:
+Copy `.env.example` into `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-| Variable         | Description                                              |
-|------------------|----------------------------------------------------------|
-| `GEMINI_API_KEY` | Google Gemini API key for AI features                    |
-| `APP_URL`        | Public URL of the deployed site (e.g. `https://ladestack.in`) |
+| Variable | Required | Description | Example |
+|---|:---:|---|---|
+| `APP_URL` | No | Public canonical deployment domain | `https://ladestack.in` |
+| `GEMINI_API_KEY` | Optional | Google Gemini API key for AI logic | `AIzaSy...` |
 
-> The app runs without these variables in local development. AI-powered features will be disabled without `GEMINI_API_KEY`.
+> In local development, the application functions seamlessly without configuring environment variables.
 
-### Development
+### Development & Build Commands
 
 ```bash
+# Start local development server with HMR at http://localhost:3000
 npm run dev
-```
 
-Opens at [http://localhost:3000](http://localhost:3000). Hot Module Replacement is enabled by default.
-
-### Build
-
-```bash
-npm run build
-```
-
-Output goes to `dist/`. Preview the production build:
-
-```bash
-npm run preview
-```
-
-### Type Check
-
-```bash
+# Run TypeScript typechecks across the entire repository
 npm run lint
+
+# Compile production-ready static assets to dist/
+npm run build
+
+# Preview production build locally on port 3000
+npm run preview
+
+# Clean build output and Astro cache artifacts
+npm run clean
 ```
 
 ---
 
-## i18n Architecture
+## Architecture & Deep Dive
 
-Routing is handled by Astro's native i18n with `prefixDefaultLocale: true`, meaning the English default locale is served under `/en/` like every other language. The root `/` redirects to `/en/`.
+### 1. Native i18n Routing Engine
 
+The routing engine uses Astro's native `i18n` with `prefixDefaultLocale: true`. Every language URL is explicitly scoped:
+
+```text
+/en/              -> English Portfolio
+/mr/              -> Marathi Portfolio (मराठी)
+/jp/              -> Japanese Portfolio (日本語)
+/fr/blog/         -> French Blog Listing
+/mr/blog/my-post  -> Marathi Blog Article
 ```
-/en/              -> English portfolio
-/jp/              -> Japanese portfolio
-/fr/blog/         -> French blog listing
-/ru/blog/my-post  -> Russian blog post
-```
 
-**Key files:**
+Navigating to the root domain (`/`) automatically detects the user's browser language or cookies and redirects cleanly to the appropriate locale prefix (defaulting to `/en/`).
 
-- [`src/i18n/config.ts`](src/i18n/config.ts) — locale list, UI string map, routing helpers (`switchLocalePath`, `getAlternateLinks`, `resolveLocale`)
-- [`src/data/portfolioContent.ts`](src/data/portfolioContent.ts) — all portfolio copy localized into 9 languages
-- [`src/content/blog/{lang}/`](src/content/blog/) — per-locale Markdown blog content
+Routing and translation helpers in [`src/i18n/config.ts`](src/i18n/config.ts):
+- `resolveLocale(locale)`: Safely validates and falls back to `en`.
+- `switchLocalePath(currentPath, targetLocale)`: Seamlessly converts any URL path to the target language counterpart.
+- `getAlternateLinks(currentPath)`: Computes an array of all alternate hreflang URLs for search indexers.
 
-**Adding a new language:**
+### 2. Interactive 3D Lanyard & Studio Stage
 
-1. Add the locale code to `LOCALES` and `LOCALE_METADATA` in `src/i18n/config.ts`
-2. Add translated `UIStrings` to `UI_TRANSLATIONS`
-3. Add a localized data block to `portfolioContent.ts`
-4. Create `src/content/blog/{newlang}/` and add Markdown posts
-5. Update `astro.config.mjs` to include the new locale in the `i18n.locales` array
+The hero features an interactive WebGL identification card:
+- **Physics Simulation**: Renders a floating, articulated lanyard cord anchored to a top clasp.
+- **Custom Shaders**: Light reflection, card matte roughness, and realistic fabric normal mapping.
+- **Gyroscope Support**: Uses [`src/utils/gyro.ts`](src/utils/gyro.ts) on mobile devices to react dynamically to phone tilting.
+- **Zero-Flicker SSR Fallback**: Renders an instant SVG/CSS skeleton placeholder on Frame 0, avoiding blank gaps while the WebGL context compiles.
 
----
+### 3. Markdown Blog Engine
 
-## Blog
+Articles are organized within Astro Content Collections in `src/content/blog/{lang}/*.md`.
 
-Blog posts are plain Markdown files under `src/content/blog/{lang}/`. Each post uses frontmatter:
+Each post supports standard frontmatter:
 
 ```markdown
 ---
-title: "My Post Title"
-description: "A short description shown in the blog listing."
-pubDate: 2025-01-01
+title: "Zero-Telemetry Architecture: Engineering for Complete Privacy"
+description: "How to architect web applications that operate entirely client-side without collecting telemetry."
+pubDate: 2026-11-02
+updatedDate: 2026-11-04
+heroImage: "/assets/blog/zero-telemetry.webp"
+tags: ["Architecture", "Privacy", "Security"]
 ---
 
-Post body in Markdown...
+## Introduction
+
+Body content written in standard GitHub-flavored Markdown...
 ```
 
-Features on every post page:
-- Auto-generated **table of contents** from headings
-- **Reading time** estimate
-- **Cross-language links** — links to the same post in all other available languages
-- **Copy link** button
-- Fully semantic HTML output, no client-side JS required for content
+Article detail pages automatically generate:
+- Table of contents with jump-links
+- Word count and reading duration estimate
+- Cross-language links to matching translations
+- Syntax-highlighted code snippets with single-click copy buttons
+
+### 4. Portfolio Content Architecture
+
+All 10 sections of the portfolio are typed and stored in [`src/data/portfolioContent.ts`](src/data/portfolioContent.ts).
+
+Sections include:
+1. **Bio & Overview**: Name, title, personal tagline, location, and key metrics.
+2. **Career Journey**: Timeline chapters detailing achievements and transitions.
+3. **Education & Certifications**: Academic qualifications and practical disciplines.
+4. **Mission & Values**: Foundational principles guiding software development.
+5. **Ecosystem**: Architectural overview of personal software products.
+6. **Live Products**: 9 production-ready tools with descriptions, tags, and URLs.
+7. **Prototypes**: 9 experimental R&D initiatives exploring novel technologies.
+8. **Skills**: Categorized competencies spanning frontend, backend, systems, and design.
+9. **Process**: Methodological step-by-step solo engineering workflow.
+10. **Contact**: Social profiles, verified email addresses, and key repositories.
+
+### 5. Dynamic Open Graph Image Generator
+
+Social media previews are generated dynamically via an Astro endpoint located at `src/pages/api/og/[lang]/[slug].ts`.
+
+Visiting:
+```text
+https://ladestack.in/api/og/en/zero-telemetry-privacy-by-architecture.svg
+```
+Returns a high-resolution, branded vector SVG card with the article's title, publication metadata, reading time, and author watermark.
+
+### 6. RSS Feeds
+
+Full RSS 2.0 feeds are generated for every language using Astro's `@astrojs/rss`:
+
+- English: `/en/rss.xml`
+- Marathi: `/mr/rss.xml`
+- Japanese: `/jp/rss.xml`
+- And all other 7 supported languages.
+
+### 7. SEO & JSON-LD Structured Data
+
+Every page renders a rich JSON-LD graph in the `<head>`:
+- `Person` schema: Author identity, job title, and social links.
+- `WebSite` schema: Site search and internationalization metadata.
+- `BlogPosting` schema: Article title, datePublished, dateModified, and author reference.
+- Full `<link rel="alternate" hreflang="...">` tags for all 10 locales plus `x-default`.
 
 ---
 
-## Portfolio Sections
+## Adding a New Language
 
-The portfolio renders 10 collapsible sections from `src/data/portfolioContent.ts`:
+To introduce an 11th language (e.g., German `de`):
 
-| # | Section         | Content                                              |
-|---|-----------------|------------------------------------------------------|
-| 01 | About & Identity | Bio (short / summary / full), quick-facts table      |
-| 02 | Experience & Journey | 5-chapter career narrative                       |
-| 03 | Education       | Academic + self-directed learning                    |
-| 04 | Vision & Values | Personal/brand mission + 10 core principles          |
-| 05 | LadeStack Ecosystem | Brand overview, audience, architecture           |
-| 06 | Products & Web Apps | 9 live products with stacks, use cases, links   |
-| 07 | Prototypes & R&D | 9 experimental / lab projects                       |
-| 08 | Skills & Tech Stack | 10 capability domains + technology landscape    |
-| 09 | Workflow & Approach | 8-step process + offerings                      |
-| 10 | Contact & Socials | Email, GitHub, LinkedIn, social channels           |
-
----
-
-## Components
-
-| Component              | Type    | Description                                                  |
-|------------------------|---------|--------------------------------------------------------------|
-| `Navbar.astro`         | Astro   | Sticky top nav with anchor links and language switcher       |
-| `HeroBackground.astro` | Astro   | Three.js canvas for animated background in the hero section  |
-| `Lanyard.jsx`          | React   | Interactive identity card / lanyard with gyro tilt effect    |
-| `PortfolioSections.tsx`| React   | Accordion-driven portfolio section renderer                  |
-| `AnimatedAccordion.tsx`| React   | Smooth animated expand/collapse for section panels           |
-| `SpotlightCard.tsx`    | React   | Card with a moving spotlight hover effect                    |
-| `BlurText.tsx`         | React   | Text reveal with blur-in animation                           |
-| `DecryptedText.tsx`    | React   | Character scramble / decryption text effect                  |
-| `ShinyText.tsx`        | React   | Shimmering gradient text effect                              |
-| `Footer.astro`         | Astro   | Site footer with copyright, SEO note, active locale display  |
+1. **Register Locale**:
+   In `src/i18n/config.ts`, append `'de'` to `LOCALES`:
+   ```typescript
+   export const LOCALES = ['en', 'mr', 'jp', 'ko', 'zh', 'ru', 'pt', 'tr', 'fr', 'es', 'de'] as const;
+   ```
+2. **Add Metadata**:
+   In `LOCALE_METADATA`:
+   ```typescript
+   de: { code: 'de', label: 'German', nativeName: 'Deutsch', htmlLang: 'de', ogLocale: 'de_DE' },
+   ```
+3. **Translate UI Strings**:
+   Add a translation block in `UI_TRANSLATIONS` inside `src/i18n/config.ts`.
+4. **Add Portfolio Content**:
+   Add a localized object in `src/data/portfolioContent.ts`.
+5. **Add Blog Content Directory**:
+   Create `src/content/blog/de/` and place translated `.md` files inside.
+6. **Update Astro Config**:
+   Add `'de'` to the `locales` array in `astro.config.mjs`.
 
 ---
 
-## SEO
+## Deployment Guide
 
-Every page includes:
+The build command (`npm run build`) compiles static HTML, CSS, JavaScript, and SVG assets into `dist/`.
 
-- `<title>` and `<meta name="description">` from localized UI strings
-- `<link rel="canonical">` pointing to the current locale URL
-- `<link rel="alternate" hreflang="...">` for all 9 supported languages + `x-default`
-- Open Graph tags (`og:title`, `og:description`, `og:locale`, `og:type`)
-- Static HTML output — no client-side rendering delay for crawlers
+### Vercel
 
----
+```bash
+# Deploy with Vercel CLI
+npx vercel
+```
+- **Framework Preset**: Astro
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
 
-## Scripts Reference
+### Netlify
 
-| Script          | Command           | Description                              |
-|-----------------|-------------------|------------------------------------------|
-| Dev server      | `npm run dev`     | Start on port 3000 with HMR              |
-| Build           | `npm run build`   | Compile to `dist/`                       |
-| Preview         | `npm run preview` | Serve built output locally               |
-| Type check      | `npm run lint`    | Run `tsc --noEmit`                       |
-| Clean           | `npm run clean`   | Remove `dist/` and `.astro/` cache       |
+Create a `netlify.toml` or configure in the Netlify Dashboard:
+- **Build Command**: `npm run build`
+- **Publish Directory**: `dist`
 
----
+### Cloudflare Pages
 
-## Deployment
+- **Framework**: Astro
+- **Build Command**: `npm run build`
+- **Build Output Directory**: `dist`
 
-This project produces a fully static output (`dist/`) compatible with any static host:
+### GitHub Pages
 
-- **Vercel** — connect the repo, set `npm run build` as the build command, `dist` as the output directory
-- **Netlify** — same as Vercel
-- **GitHub Pages** — use the official Astro GitHub Actions workflow
-- **Cloudflare Pages** — connect repo, build command `npm run build`, output `dist`
-
-Set the `APP_URL` environment variable to your production domain.
+A standard GitHub Actions workflow (`.github/workflows/deploy.yml`) can build and deploy the `dist/` directory to GitHub Pages using the official `actions/deploy-pages` action.
 
 ---
 
 ## Contributing
 
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feat/your-feature`
-3. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/)
-4. Open a pull request
+Contributions, issues, and feature suggestions are welcome:
+
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feat/amazing-feature`).
+3. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/) (`git commit -m "feat: add amazing feature"`).
+4. Push to the branch (`git push origin feat/amazing-feature`).
+5. Open a Pull Request.
 
 ---
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for terms and conditions.
 
 ---
 
-## Author
+## Author & Connect
 
-**Girish Balaso Lade** — UI/UX Designer, Full-Stack Developer, Founder of [LadeStack](https://ladestack.in/)
+**Girish Balaso Lade**  
+Founder & Solo Architect at **LadeStack**  
+*UI/UX Designer & Full-Stack Systems Engineer*
 
-- Website: [ladestack.in](https://ladestack.in/)
-- GitHub: [@girishlade111](https://github.com/girishlade111)
-- Email: admin@ladestack.in
+- **Website**: [ladestack.in](https://ladestack.in/)
+- **GitHub**: [@girishlade111](https://github.com/girishlade111)
+- **Email**: [admin@ladestack.in](mailto:admin@ladestack.in)

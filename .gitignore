@@ -1,25 +1,23 @@
-# Vercel
-.vercel/
-
 # Dependencies
 node_modules/
+/.pnp
+.pnp.js
 
-# Build output
+# Build output & caches
 dist/
 build/
 .astro/
 
-# Test coverage
-coverage/
-
 # Environment variables
 .env
+.env.production
+.env.local
+.env.*.local
 .env.*
 !.env.example
 
-# OS artifacts
-.DS_Store
-Thumbs.db
+# Test coverage
+coverage/
 
 # Logs
 *.log
@@ -28,7 +26,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Editor / IDE
+# IDE & OS Artifacts
+.DS_Store
+Thumbs.db
 .vscode/
 .idea/
 *.suo
@@ -37,8 +37,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-# AI Studio artifacts
+# Platform & Deployment Artifacts
+.vercel/
 .aistudio/
-
-.vercel
-.env*

@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import AppFloatingNav from '../components/AppFloatingNav';
+import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import {
   LOCALES,
@@ -325,13 +325,6 @@ const jsonLdGraph = {
     <link
       rel="preload"
       as="image"
-      href="/assets/aistudio/image_a475d35f.webp"
-      type="image/webp"
-      fetchpriority="high"
-    />
-    <link
-      rel="preload"
-      as="image"
       href="/assets/profile.jpeg"
       type="image/jpeg"
       fetchpriority="high"
@@ -467,7 +460,7 @@ const jsonLdGraph = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdGraph)} />
   </head>
   <body class="min-h-screen flex flex-col overflow-x-clip bg-[#fafafa] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white dark:bg-[#09090b] dark:text-zinc-100 dark:selection:bg-zinc-100 dark:selection:text-zinc-900 transition-colors duration-150">
-    <AppFloatingNav client:load locale={locale} currentPath={currentPath} homeUrl={homeUrl} blogUrl={blogUrl} />
+    <Navbar locale={locale} currentPath={currentPath} localeSwitchPath={localeSwitchPath} />
     <main id="main-content" class="flex-1 min-w-0 w-full max-w-3xl mx-auto px-3.5 sm:px-6">
       <slot />
     </main>
