@@ -24,7 +24,8 @@ const escapeXml = (value: string) =>
 export const GET: APIRoute = ({ params, site }) => {
   const locale = (params.lang as Locale) || 'en';
   const meta = LOCALE_METADATA[locale] || LOCALE_METADATA.en;
-  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '');
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '') + base;
   const posts = getBlogsByLocale(locale);
 
   const rssFeedUrl = `${origin}/${locale}/rss.xml`;
@@ -34,8 +35,8 @@ export const GET: APIRoute = ({ params, site }) => {
 
   const isMarathi = locale === 'mr';
   const channelTitle = isMarathi
-    ? 'गिरीश लाडे — तांत्रिक ब्लॉग आणि सॉफ्टवेअर आर्किटेक्चर'
-    : `Girish Lade — Blog & Engineering (${meta.label})`;
+    ? 'गिरीश लाडे: तांत्रिक ब्लॉग आणि सॉफ्टवेअर आर्किटेक्चर'
+    : `Girish Lade: Blog & Engineering (${meta.label})`;
 
   const channelDesc = isMarathi
     ? 'LadeStack चे संस्थापक गिरीश लाडे यांचे तंत्रज्ञान, ब्राउझर कम्प्युटिंग आणि प्रायव्हेट वेब टूल्सवरील अस्सल मराठी लेख.'

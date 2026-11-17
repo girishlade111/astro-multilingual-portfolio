@@ -43,6 +43,7 @@ const meta = LOCALE_METADATA[locale];
 const pageTitle = title ? `${title} | ${t.brandName}` : t.siteTitle;
 const pageDescription = description || t.siteDescription;
 
+const baseUrl = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const siteOrigin = (Astro.site ? Astro.site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '');
 const canonicalUrl = `${siteOrigin}${currentPath}`;
 const alternateLinks = noindex ? [] : getAlternateLinks(currentPath, siteOrigin);
@@ -82,8 +83,8 @@ const defaultKeywords = [
 const articleSlugMatch = isArticle ? currentPath.match(/\/blog\/([^/]+)/) : null;
 const articleSlug = articleSlugMatch ? articleSlugMatch[1] : '';
 const ogImageUrl = isArticle && articleSlug
-  ? `${siteOrigin}/api/og/${locale}/${articleSlug}.svg`
-  : `${siteOrigin}/assets/aistudio/image_a475d35f.webp`;
+  ? `${siteOrigin}${baseUrl}/api/og/${locale}/${articleSlug}.svg`
+  : `${siteOrigin}${baseUrl}/assets/aistudio/image_a475d35f.webp`;
 
 // Comprehensive multi-entity Linked Schema.org Graph
 const jsonLdGraph = {
@@ -105,7 +106,7 @@ const jsonLdGraph = {
       '@id': `${siteOrigin}/#organization`,
       name: 'LadeStack',
       url: 'https://ladestack.in',
-      logo: `${siteOrigin}/favicon-32x32.png`,
+      logo: `${siteOrigin}${baseUrl}/favicon-32x32.png`,
       founder: {
         '@id': `${siteOrigin}/#person`,
       },
@@ -117,7 +118,7 @@ const jsonLdGraph = {
       alternateName: 'Girish Lade',
       jobTitle: 'Founder & Full-Stack Engineer',
       url: siteOrigin,
-      image: `${siteOrigin}/assets/profile.jpeg`,
+      image: `${siteOrigin}${baseUrl}/assets/profile.jpeg`,
       sameAs: [
         'https://github.com/girishlade111',
         'https://www.linkedin.com/in/girish-lade/',
@@ -133,13 +134,13 @@ const jsonLdGraph = {
               '@type': 'ListItem',
               position: 1,
               name: t.nav.home,
-              item: `${siteOrigin}/${locale}/`,
+              item: `${siteOrigin}${baseUrl}/${locale}/`,
             },
             {
               '@type': 'ListItem',
               position: 2,
               name: t.nav.blog,
-              item: `${siteOrigin}/${locale}/blog/`,
+              item: `${siteOrigin}${baseUrl}/${locale}/blog/`,
             },
             {
               '@type': 'ListItem',
@@ -154,13 +155,13 @@ const jsonLdGraph = {
                 '@type': 'ListItem',
                 position: 1,
                 name: t.nav.home,
-                item: `${siteOrigin}/${locale}/`,
+                item: `${siteOrigin}${baseUrl}/${locale}/`,
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: t.nav.blog,
-                item: `${siteOrigin}/${locale}/blog/`,
+                item: `${siteOrigin}${baseUrl}/${locale}/blog/`,
               },
             ]
           : [
@@ -168,7 +169,7 @@ const jsonLdGraph = {
                 '@type': 'ListItem',
                 position: 1,
                 name: t.nav.home,
-                item: `${siteOrigin}/${locale}/`,
+                item: `${siteOrigin}${baseUrl}/${locale}/`,
               },
             ],
     },
@@ -273,7 +274,7 @@ const jsonLdGraph = {
     </script>
 
     <!-- Immediate Autocomplete Shield & Self-Healing Dual-Storage Locale Manager -->
-    <script is:inline define:vars={{ pageLocale: locale, isHomePage: isHome, supportedList }}>
+    <script is:inline define:vars={{ pageLocale: locale, isHomePage: isHome, supportedList, baseUrl }}>
       (function () {
         try {
           function getCookie(name) {
@@ -296,7 +297,8 @@ const jsonLdGraph = {
           if (isHomePage && saved && saved !== pageLocale && allowed.indexOf(saved) !== -1) {
             var search = window.location.search || '';
             var hash = window.location.hash || '';
-            window.location.replace('/' + saved + '/' + search + hash);
+            var prefix = baseUrl ? baseUrl : '';
+            window.location.replace(prefix + '/' + saved + '/' + search + hash);
             return;
           }
 
@@ -304,7 +306,8 @@ const jsonLdGraph = {
           // Ensure Dual Storage (localStorage + Cookie) firmly holds the current page locale
           try {
             localStorage.setItem('preferred_locale', pageLocale);
-            document.cookie = 'preferred_locale=' + encodeURIComponent(pageLocale) + ';path=/;max-age=31536000;SameSite=Lax';
+            var cookiePath = baseUrl || '/';
+            document.cookie = 'preferred_locale=' + encodeURIComponent(pageLocale) + ';path=' + cookiePath + ';max-age=31536000;SameSite=Lax';
           } catch (_) {}
         } catch (_) {}
       })();
@@ -325,7 +328,7 @@ const jsonLdGraph = {
     <link
       rel="preload"
       as="image"
-      href="/assets/profile.jpeg"
+      href={`${baseUrl}/assets/profile.jpeg`}
       type="image/jpeg"
       fetchpriority="high"
     />
@@ -399,22 +402,22 @@ const jsonLdGraph = {
     <meta name="color-scheme" content="light dark" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href={`${baseUrl}/sitemap.xml`} />
+    <link rel="icon" type="image/x-icon" href={`${baseUrl}/favicon.ico`} />
+    <link rel="icon" type="image/png" sizes="32x32" href={`${baseUrl}/favicon-32x32.png`} />
+    <link rel="icon" type="image/png" sizes="16x16" href={`${baseUrl}/favicon-16x16.png`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${baseUrl}/apple-touch-icon.png`} />
+    <link rel="manifest" href={`${baseUrl}/site.webmanifest`} />
 
     <!-- Agentic AI Discovery (llmstxt.org & ARD) -->
-    <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLMs.txt" />
-    <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="Full LLMs.txt" />
-    <link rel="help" type="text/markdown" href="/llms.txt" />
-    <link rel="agent-catalog" type="application/json" href="/ai-catalog.json" />
+    <link rel="alternate" type="text/markdown" href={`${baseUrl}/llms.txt`} title="LLMs.txt" />
+    <link rel="alternate" type="text/markdown" href={`${baseUrl}/llms-full.txt`} title="Full LLMs.txt" />
+    <link rel="help" type="text/markdown" href={`${baseUrl}/llms.txt`} />
+    <link rel="agent-catalog" type="application/json" href={`${baseUrl}/ai-catalog.json`} />
 
     <!-- RSS 2.0 Feeds -->
-    <link rel="alternate" type="application/rss+xml" title="Girish Lade: Full RSS 2.0 Feed" href="/rss.xml" />
-    <link rel="alternate" type="application/rss+xml" title={`Girish Lade: ${meta.label} RSS Feed`} href={`/${locale}/rss.xml`} />
+    <link rel="alternate" type="application/rss+xml" title="Girish Lade: Full RSS 2.0 Feed" href={`${baseUrl}/rss.xml`} />
+    <link rel="alternate" type="application/rss+xml" title={`Girish Lade: ${meta.label} RSS Feed`} href={`${baseUrl}/${locale}/rss.xml`} />
 
     <!-- Canonical & Multilingual hreflang Alternates for SEO -->
     <link rel="canonical" href={canonicalUrl} />

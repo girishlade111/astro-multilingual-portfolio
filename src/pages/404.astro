@@ -5,13 +5,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const homeUrl = getRelativeLocaleUrl(DEFAULT_LOCALE, '');
 const blogUrl = getRelativeLocaleUrl(DEFAULT_LOCALE, 'blog');
+const baseUrl = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const currentPath = `${baseUrl}/404/`;
 ---
 
 <BaseLayout
   locale={DEFAULT_LOCALE}
   title="Page not found"
   description="This page could not be found. Return to Girish Lade’s portfolio or browse the blog."
-  currentPath="/404/"
+  currentPath={currentPath}
   localeSwitchPath="/"
   noindex
 >

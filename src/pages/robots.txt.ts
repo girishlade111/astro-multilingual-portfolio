@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) => {
-  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '');
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '') + base;
   const body = [
     'User-agent: *',
     'Allow: /',

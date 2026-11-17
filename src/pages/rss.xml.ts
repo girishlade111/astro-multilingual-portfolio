@@ -15,7 +15,8 @@ const escapeXml = (value: string) =>
   );
 
 export const GET: APIRoute = ({ site }) => {
-  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '');
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '') + base;
   const posts = getAllMarkdownBlogs()
     .sort(
       (a, b) =>
@@ -50,7 +51,7 @@ export const GET: APIRoute = ({ site }) => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Girish Lade — Software Architecture, Browser Computing &amp; Developer Tools</title>
+    <title>Girish Lade: Software Architecture, Browser Computing &amp; Developer Tools</title>
     <description>Technical writings by Girish Balaso Lade, founder of LadeStack. Zero-telemetry web applications, browser-first developer tools, and client-side computing.</description>
     <link>${origin}/</link>
     <atom:link href="${rssFeedUrl}" rel="self" type="application/rss+xml" />

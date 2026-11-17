@@ -156,7 +156,10 @@ export default function BlogDirectory({ posts, strings, locale }: BlogDirectoryP
       {paginatedPosts.length > 0 ? (
         <div className="divide-y divide-zinc-200/70 dark:divide-zinc-800/70">
           {paginatedPosts.map((post) => {
-            const postUrl = `/${locale}/blog/${post.slug}`;
+            const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL)
+              ? import.meta.env.BASE_URL.replace(/\/+$/, '')
+              : '';
+            const postUrl = `${base}/${locale}/blog/${post.slug}`;
             return (
               <article key={post.slug} className="py-6 sm:py-7 first:pt-2 last:pb-2 group">
                 <div className="space-y-2.5 max-w-3xl">

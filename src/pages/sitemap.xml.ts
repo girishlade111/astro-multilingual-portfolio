@@ -24,7 +24,8 @@ interface SitemapEntry {
 }
 
 export const GET: APIRoute = ({ site }) => {
-  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '');
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  const origin = (site ? site.toString() : 'https://girish.ladestack.in').replace(/\/+$/, '') + base;
   const getAbsoluteUrl = (path: string) =>
     `${origin}${path.startsWith('/') ? path : `/${path}`}`;
 

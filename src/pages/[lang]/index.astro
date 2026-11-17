@@ -19,8 +19,10 @@ export function getStaticPaths() {
 const activeLocale = Astro.currentLocale || Astro.params.lang;
 const locale: Locale = resolveLocale(activeLocale);
 const currentPath = getRelativeLocaleUrl(locale, '');
+const baseUrl = import.meta.env.BASE_URL.replace(/\/+$/, '');
 
-const profileImageUrl = '/assets/profile.jpeg';
+const profileImageUrl = `${baseUrl}/assets/profile.jpeg`;
+const heroBgImageUrl = `${baseUrl}/assets/aistudio/image_a475d35f.webp`;
 ---
 
 <BaseLayout
@@ -37,7 +39,7 @@ const profileImageUrl = '/assets/profile.jpeg';
       class="relative z-30 w-full h-[380px] sm:h-[440px] lg:h-[480px] flex flex-col items-center justify-end select-none overflow-visible"
     >
       {/* Studio Exhibition Stage Background */}
-      <HeroBackground imageUrl="/assets/aistudio/image_a475d35f.webp" />
+      <HeroBackground imageUrl={heroBgImageUrl} />
 
       {/* 0ms SSR Lanyard Preview */}
       <div
